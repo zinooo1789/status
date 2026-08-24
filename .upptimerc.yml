@@ -1,31 +1,37 @@
-# Change these first
-owner: upptime # Your GitHub organization or username, where this repository lives
-repo: upptime # The name of this repository
+# miristudio 외부 감시 (2026-08-25 설치)
+#
+# 왜 있는가: 워커의 아침 텔레그램은 크론 자신의 심장박동이라, 크론이 죽으면 알림도
+# 같이 죽는다 — "조용함"과 "죽음"이 구분되지 않는다. 여기서는 GitHub Actions 가
+# 5분마다 **밖에서** 찔러보고, 죽으면 이슈가 자동으로 열린다(닫히면 자동 종료).
+owner: zinooo1789
+repo: status
 
 sites:
-  - name: Google
-    url: https://www.google.com
-  - name: Wikipedia
-    url: https://en.wikipedia.org
-  - name: Hacker News
-    url: https://news.ycombinator.com
-  - name: Secret Site
-    url: $SECRET_SITE
+  - name: 홈페이지 (miristudio.pages.dev)
+    url: https://miristudio.pages.dev
+  - name: 접수 워커 (miri-intake)
+    # /api/health — 정보 0 의 전용 GET (intake/worker.js, 2026-08-25 신설)
+    url: https://miri-intake.zinooo1789.workers.dev/api/health
 
 status-website:
-  # Add your custom domain name, or remove the `cname` line if you don't have a domain
-  # Uncomment the `baseUrl` line if you don't have a custom domain and add your repo name there
-  cname: demo.upptime.js.org
-  # baseUrl: /your-repo-name
-  logoUrl: https://raw.githubusercontent.com/upptime/upptime.js.org/master/static/img/icon.svg
-  name: Upptime
-  introTitle: "**Upptime** is the open-source uptime monitor and status page, powered entirely by GitHub."
-  introMessage: This is a sample status page which uses **real-time** data from our [GitHub repository](https://github.com/upptime/upptime). No server required — just GitHub Actions, Issues, and Pages. [**Get your own for free**](https://github.com/upptime/upptime)
+  # 커스텀 도메인 없음 — 프로젝트 페이지 경로로 서빙
+  baseUrl: /status
+  name: miristudio status
+  introTitle: "**miristudio** 가동 상태"
+  introMessage: 홈페이지와 주문 접수 서버를 5분마다 자동 점검합니다.
   navbar:
-    - title: Status
+    - title: 상태
       href: /
-    - title: GitHub
-      href: https://github.com/$OWNER/$REPO
+    - title: miristudio
+      href: https://miristudio.pages.dev
 
-# Upptime also supports notifications, assigning issues, and more
-# See https://upptime.js.org/docs/configuration
+# 장애 이슈가 열리면 저장소 watch 알림으로 온다. 텔레그램 연동은 나중에
+# 저장소 시크릿(NOTIFICATION_TELEGRAM_*)만 넣으면 켜진다 — 코드 수정 불필요.
+i18n:
+  activeIncidents: 진행 중인 장애
+  allSystemsOperational: 모든 시스템 정상
+  degradedPerformance: 성능 저하
+  down: 중단
+  up: 정상
+  overallUptime: "전체 가동률: $UPTIME"
+  averageResponseTime: "평균 응답: $TIME ms"
